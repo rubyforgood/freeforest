@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import ReactMapGL, { Source, Layer, Popup } from "react-map-gl";
-import Pins from './pins';
-
+import Pins from "./pins";
 
 const MAPBOX_TOKEN =
   "pk.eyJ1IjoiZnJlZWZvcmVzdHNjaG9vbCIsImEiOiJjazhpNWcwcnAwMmxpM2ZwbTFlbmczZmNkIn0.pM5KRLaHYWUeGr0jOo352g";
@@ -33,12 +32,6 @@ const ALAMEDA = {
   },
 };
 
-const POINTS = [
-  {
-    latitude: 37.754980,
-    longitude: -122.398010
-  }
-]
 
 const mapStyle = {
   version: 8,
@@ -63,7 +56,7 @@ const mapStyle = {
   ],
 };
 
-function Map() {
+function Map(props) {
   const [viewport, setViewport] = useState({
     width: 800,
     height: 800,
@@ -124,9 +117,15 @@ function Map() {
       mapboxApiAccessToken={MAPBOX_TOKEN}
       onHover={onHover}
     >
-      <Pins data={POINTS} />
+      <Pins data={props.location} />
 
-      <Source type="geojson" data={mapStyle.sources.points.data}>
+      <Source
+        type="geojson"
+        data={{
+          type: "FeatureCollection",
+          features: props.features,
+        }}
+      >
         <Layer {...mapStyle.layers[0]} />
       </Source>
       {renderPopup()}
