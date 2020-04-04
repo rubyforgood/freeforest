@@ -7,7 +7,12 @@ const MAPBOX_TOKEN =
 const ALAMEDA = {
   type: "Feature",
   id: "6001",
-  properties: { name: "Alameda" },
+  properties: {
+    name: "CA - SF East Bay",
+    learnMoreLink:
+      "https://www.freeforestschool.org/free-forest-school-sf-east-bay-california",
+    fbLink: "https://www.facebook.com/groups/FreeForestSchoolSFEastBayCA/",
+  },
   geometry: {
     type: "Polygon",
     coordinates: [
@@ -84,7 +89,19 @@ function Map() {
           latitude={hoverInfo.lngLat[1]}
           closeButton={false}
         >
-          <div className="county-info">{hoverInfo.county.name}</div>
+          <div className="name">{hoverInfo.county.name}</div>
+          <div className="learn">
+            {" "}
+            Learn More:{" "}
+            <a href={hoverInfo.county.learnMoreLink}>
+              {hoverInfo.county.learnMoreLink}
+            </a>
+          </div>
+          <div className="join">
+            {" "}
+            Join Us:{" "}
+            <a href={hoverInfo.county.fbLink}>{hoverInfo.county.fbLink}</a>
+          </div>
         </Popup>
       );
     }
