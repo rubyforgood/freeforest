@@ -9,8 +9,8 @@ function Map(props) {
   const [viewport, setViewport] = useState({
     width: "100%",
     height: "100%",
-    latitude: 37.7577,
-    longitude: -122.4376,
+    latitude: props.location.latitude,
+    longitude: props.location.longitude,
     zoom: 8,
   });
   const [popupInfo, setPopupInfo] = useState(null);
@@ -39,7 +39,7 @@ function Map(props) {
           latitude={popupInfo.latitude}
           longitude={popupInfo.longitude}
           closeOnClick={false}
-          onClose={() => this.setState({ popupInfo: null })}
+          onClose={() => setPopupInfo(null)}
         >
           <div className="name">{popupInfo.county.name}</div>
           <div className="learn">
@@ -64,13 +64,13 @@ function Map(props) {
       height={500}
       onClick={onClickChapter}
     >
-      <Pins data={props.location} />
+      <Pins data={[props.location]} />
 
       <Source
         type="geojson"
         data={{
           type: "FeatureCollection",
-          features: props.features,
+          features: props.chapters,
         }}
       >
         <Layer
