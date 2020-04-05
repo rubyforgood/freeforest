@@ -9,6 +9,21 @@ class FacebookGraph
   end
 
   def group(id)
-    self.class.get("/#{id}", format: :plain, query: { access_token: @access_token, fields: 'id,cover,icon,name,privacy,permissions,events{id,cover,place,name,event_times}' })
+    fields = <<~GRAPHQL
+      id,
+      cover,
+      icon,
+      name,
+      privacy,
+      permissions,
+      events {
+        id,
+        cover,
+        place,
+        name,
+        event_times
+      }
+    GRAPHQL
+    self.class.get("/#{id}", query: { access_token: @access_token, fields: fields })
   end
 end
