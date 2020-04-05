@@ -41,7 +41,7 @@ const ME_LOCATION = [
 
 document.addEventListener("DOMContentLoaded", () => {
   ReactDOM.render(
-    <div>Hello, world</div>,
+    <Map location={ME_LOCATION} features={FEATURES} className='freeforestmap' />,
     document.body.appendChild(document.createElement("div"))
   );
 });

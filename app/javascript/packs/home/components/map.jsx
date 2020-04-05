@@ -65,6 +65,7 @@ function Map(props) {
       onViewportChange={setViewport}
       mapboxApiAccessToken={MAPBOX_TOKEN}
       onHover={onHover}
+      height={500}
     >
       <Pins data={props.location} />
 
