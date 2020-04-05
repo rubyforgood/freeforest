@@ -2,6 +2,9 @@ import React from "react";
 import Map from "./components/map";
 import LocationInput from "./components/locationInput";
 
+const MAPBOX_TOKEN =
+  "pk.eyJ1IjoiZnJlZWZvcmVzdHNjaG9vbCIsImEiOiJjazhpNWcwcnAwMmxpM2ZwbTFlbmczZmNkIn0.pM5KRLaHYWUeGr0jOo352g";
+
 const CHAPTERS = [
   {
     type: "Feature",
@@ -89,13 +92,18 @@ const LOCATION = {
 };
 
 function App() {
-
-	const [location, setLocation] = React.useState(null);
+  const [location, setLocation] = React.useState(null);
 
   return (
     <React.Fragment>
-      <LocationInput setLocation={setLocation}/>
-      <Map location={location || LOCATION} chapters={CHAPTERS} className="freeforestmap" />
+      <LocationInput setLocation={setLocation} />
+      <Map
+        mapboxToken={MAPBOX_TOKEN}
+        location={location || LOCATION}
+        chapters={CHAPTERS}
+        className="freeforestmap"
+        setLocation={setLocation}
+      />
     </React.Fragment>
   );
 }

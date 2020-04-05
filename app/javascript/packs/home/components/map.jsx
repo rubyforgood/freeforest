@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import ReactMapGL, { Source, Layer, Popup } from "react-map-gl";
+import Geocoder from "react-map-gl-geocoder";
+import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import Pins from "./pins";
-
-const MAPBOX_TOKEN =
-  "pk.eyJ1IjoiZnJlZWZvcmVzdHNjaG9vbCIsImEiOiJjazhpNWcwcnAwMmxpM2ZwbTFlbmczZmNkIn0.pM5KRLaHYWUeGr0jOo352g";
 
 function Map(props) {
   const [viewport, setViewport] = useState({
@@ -56,14 +55,34 @@ function Map(props) {
     return null;
   };
 
+  const mapRef = React.useRef();
+
   return (
     <ReactMapGL
+      ref={mapRef}
       {...viewport}
       onViewportChange={setViewport}
-      mapboxApiAccessToken={MAPBOX_TOKEN}
+      mapboxApiAccessToken={props.mapboxToken}
       height={500}
       onClick={onClickChapter}
     >
+      <Geocoder
+        mapRef={mapRef}
+        onViewportChange={(viewport) => {
+          props.setLocation({
+            longitude: viewport.longitude,
+            latitude: viewport.latitude,
+          });
+          setViewport((state) => { 
+            return {
+              ...state,
+              latitude: viewport.latitude,
+              longitude: viewport.longitude
+            };
+          });
+        }}
+        mapboxApiAccessToken={props.mapboxToken}
+      />
       <Pins data={[props.location]} />
 
       <Source
