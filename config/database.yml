@@ -1,0 +1,16 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: freeforest_development
+
+test:
+  <<: *default
+  database: freeforest_test
+
+production:
+  <<: *default
+  password: <%= ENV['FREEFOREST_DATABASE_PASSWORD'] %>
