@@ -5,12 +5,13 @@ import "mapbox-gl/dist/mapbox-gl.css";
 
 const ALAMEDA = {
   type: "Feature",
-  id: "6001",
+  id: "1",
   properties: {
+    type: "Chapter",
     name: "CA - SF East Bay",
     learnMoreLink:
       "https://www.freeforestschool.org/free-forest-school-sf-east-bay-california",
-    fbLink: "https://www.facebook.com/groups/FreeForestSchoolSFEastBayCA/",
+    fbLink: "https://www.facebook.com/groups/FreeForestSchoolSFEastBayCA",
   },
   geometry: {
     type: "Polygon",
@@ -41,7 +42,11 @@ const ME_LOCATION = [
 
 document.addEventListener("DOMContentLoaded", () => {
   ReactDOM.render(
-    <Map location={ME_LOCATION} features={FEATURES} className='freeforestmap' />,
+    <Map
+      location={ME_LOCATION}
+      features={FEATURES}
+      className="freeforestmap"
+    />,
     document.body.appendChild(document.createElement("div"))
   );
 });

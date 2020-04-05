@@ -13,45 +13,42 @@ function Map(props) {
     longitude: -122.4376,
     zoom: 8,
   });
-  const [hoverInfo, setHoverInfo] = useState(null);
+  const [popupInfo, setPopupInfo] = useState(null);
 
-  const onHover = (event) => {
-    let countyName = "";
-    let hoverInfo = null;
+  const onClickChapter = (event) => {
+    let popupInfo = null;
 
     if (event.features) {
-      const county = event.features[0];
-      if (county && county.properties.name) {
-        hoverInfo = {
-          lngLat: event.lngLat,
-          county: county.properties,
+      const feature = event.features[0];
+      if (feature && feature.properties.type === "Chapter") {
+        popupInfo = {
+          latitude: event.lngLat[1],
+          longitude: event.lngLat[0],
+          county: feature.properties,
         };
       }
-      setHoverInfo(hoverInfo);
-      console.log(hoverInfo);
+      setPopupInfo(popupInfo);
     }
   };
 
   const renderPopup = () => {
-    if (hoverInfo) {
+    if (popupInfo) {
       return (
         <Popup
-          longitude={hoverInfo.lngLat[0]}
-          latitude={hoverInfo.lngLat[1]}
-          closeButton={false}
+          anchor="top"
+          latitude={popupInfo.latitude}
+          longitude={popupInfo.longitude}
+          closeOnClick={false}
+          onClose={() => this.setState({ popupInfo: null })}
         >
-          <div className="name">{hoverInfo.county.name}</div>
+          <div className="name">{popupInfo.county.name}</div>
           <div className="learn">
             {" "}
-            Learn More:{" "}
-            <a href={hoverInfo.county.learnMoreLink}>
-              {hoverInfo.county.learnMoreLink}
-            </a>
+            Learn More: <a href={popupInfo.county.learnMoreLink}>Here</a>
           </div>
           <div className="join">
             {" "}
-            Join Us:{" "}
-            <a href={hoverInfo.county.fbLink}>{hoverInfo.county.fbLink}</a>
+            Join Us: <a href={popupInfo.county.fbLink}>Here</a>
           </div>
         </Popup>
       );
@@ -64,8 +61,8 @@ function Map(props) {
       {...viewport}
       onViewportChange={setViewport}
       mapboxApiAccessToken={MAPBOX_TOKEN}
-      onHover={onHover}
       height={500}
+      onClick={onClickChapter}
     >
       <Pins data={props.location} />
 
