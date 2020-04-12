@@ -93,6 +93,13 @@ const LOCATION = {
 
 function App() {
   const [location, setLocation] = React.useState(null);
+  const [chapters, setChapters] = React.useState([]);
+
+  React.useEffect(() => {
+    window.fetch("/teams").then((response) => response.json()).then((json) => {
+      setChapters(json);
+    });
+  }, []);
 
   return (
     <React.Fragment>
@@ -100,7 +107,7 @@ function App() {
       <Map
         mapboxToken={MAPBOX_TOKEN}
         location={location || LOCATION}
-        chapters={CHAPTERS}
+        chapters={chapters}
         className="freeforestmap"
         setLocation={setLocation}
       />
